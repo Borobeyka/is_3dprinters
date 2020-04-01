@@ -23,7 +23,7 @@
                             <?=$counter++?>
                         </a>
                     </td>
-                    <td>
+                    <td width="60%">
                         <a href="/item/<?=$itemDetails["item_id"]?>" title="<?=$itemDetails["title"]?>">
                             <?=$itemDetails["title"]?>
                         </a>

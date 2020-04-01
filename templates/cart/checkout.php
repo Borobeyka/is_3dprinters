@@ -91,7 +91,7 @@
                 <td>
                     <img src="/uploads/items/<?=$position["image"]?>">
                 </td>
-                <td>
+                <td width="20%">
                     <?=$position["title"]?>
                 </td>
                 <td>

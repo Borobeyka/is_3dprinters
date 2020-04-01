@@ -29,7 +29,7 @@
                         <img src="/uploads/items/<?=$position["image"]?>">
                     </a>
                 </td>
-                <td>
+                <td width="20%">
                     <a href="/item/<?=$position["item_id"]?>" title="<?=$position["title"]?>">
                         <?=$position["title"]?>
                     </a>

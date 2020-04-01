@@ -91,7 +91,7 @@
             "title" => "Результаты поиска"
         ],
         [
-            "path" => "/^admin$/",
+            "path" => "/^admin(\?[a-z0-9=]{1,32})?$/",
             "template" => "admin",
             "action" => "index",
             "title" => "Панель администратора"
