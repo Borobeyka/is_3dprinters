@@ -3,7 +3,6 @@
     $error = "";
     if(!empty($data["submit"])) {
         $imageInfo = @$_FILES["image"];
-        dump($imageInfo);
         if(empty($data["title"])) $error = "Введите название товара";
         else if(empty($data["category"])) $error = "Выберите категорию товара";
         else if(empty($data["price"])) $error = "Введите цену для товара";

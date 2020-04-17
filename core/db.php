@@ -32,6 +32,20 @@
         else return false;  
     }
 
+    function getAllItems() {
+        global $dbLink;
+        $items = [];
+        $query = "SELECT * FROM item_price as ip, items as it WHERE it.id = ip.item_id ORDER BY it.id";
+        $query = sprintf($query);
+        $result = mysqli_query($dbLink, $query);
+        if(mysqli_num_rows($result)) {
+            while($row = mysqli_fetch_assoc($result))
+                array_push($items, $row);
+            return $items;
+        }
+        else return false; 
+    }
+
     function getItemsByNewest() {
         global $dbLink;
         $items = [];
@@ -158,17 +172,20 @@
     }
 
     function isUserAdmin() {
-        if(getUserInfo()["isAdmin"] == 1) return true;
+        if(getUserInfo() !== false && getUserInfo()["isAdmin"] == 1) return true;
         else return false;
     }
 
     function getUserInfo() {
-        global $dbLink;
-        $user = [];
-        $query = "SELECT * FROM users WHERE id = %d";
-        $query = sprintf($query, getUserID());
-        $result = mysqli_query($dbLink, $query);
-        return mysqli_fetch_assoc($result);
+        if(isUserLogged()) {
+            global $dbLink;
+            $user = [];
+            $query = "SELECT * FROM users WHERE id = %d";
+            $query = sprintf($query, getUserID());
+            $result = mysqli_query($dbLink, $query);
+            return mysqli_fetch_assoc($result);
+        }
+        else return false;
     }
 
     function getHistoryOrdersByUser($userID) {

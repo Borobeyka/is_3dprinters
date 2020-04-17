@@ -36,7 +36,7 @@
         }
         $response = compileResponse("success", "Товар добавлен в корзину");
     }
-    else $response = compileResponse("error", "Чтобы добавить товар в корзину необходимо авторизироватсья");
+    else $response = compileResponse("error", "Чтобы добавить товар в корзину необходимо авторизироваться");
     echo json_encode($response);
 
     function compileResponse($status, $message) {

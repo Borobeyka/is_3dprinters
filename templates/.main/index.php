@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/templates/.main/style.css">
     </head>
     <body>
+        <?=loadModule("user_admin_strip")?>
         <header class="main-window">
             <a class="logotype" href="/">
                 <img src="/uploads/system/logotype.png" height="100%">

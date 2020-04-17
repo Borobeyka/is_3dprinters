@@ -581,6 +581,9 @@ nav {
             }
             &:last-child {
                 border-right: 0;
+                a:hover {
+                    text-decoration: underline;
+                }
             }
         }
     }
@@ -682,6 +685,26 @@ nav {
                 background-color: @default-color-blue;
                 cursor: pointer;
             }
+        }
+    }
+}
+
+.admin-strip {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    .title {
+        font-weight: bold;
+    }
+    a {
+        padding-left: 10px;
+        padding-right: 10px;
+        border-right: 1px solid black;
+        &:hover {
+            text-decoration: underline;
+        }
+        &:last-child {
+            border-right: 0;
         }
     }
 }

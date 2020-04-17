@@ -532,6 +532,10 @@ nav > div a:hover {
 .search-table tr td:last-child {
   border-right: 0;
 }
+.search-table tr th:last-child a:hover,
+.search-table tr td:last-child a:hover {
+  text-decoration: underline;
+}
 .items-pagination {
   display: flex;
   justify-content: center;
@@ -626,6 +630,25 @@ nav > div a:hover {
 .add-item .submit input:hover {
   background-color: #2969A9;
   cursor: pointer;
+}
+.admin-strip {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+.admin-strip .title {
+  font-weight: bold;
+}
+.admin-strip a {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid black;
+}
+.admin-strip a:hover {
+  text-decoration: underline;
+}
+.admin-strip a:last-child {
+  border-right: 0;
 }
 footer {
   width: 100%;
