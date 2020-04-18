@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
         <title><?=$title?></title>
         <script type="text/javascript" src="/core/libs/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="/core/libs/jquery.maskedinput.js"></script>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="lower-row">
-                    © 2020 "3dp-comp.ru" - Интернет магазин комплектующих для 3D принтеров<br>
+                    © 2020 "3dp-comp.ru" - Интернет-магазин комплектующих для 3D принтеров<br>
                     Сайт носит исключительно ознакомительный характер и является дипломной работой<br>
                 </div>
             </div>

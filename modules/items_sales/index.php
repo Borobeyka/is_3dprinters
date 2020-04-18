@@ -1,6 +1,6 @@
 <?php $itemsSales = getItemsBySales(); ?>
 
-<h1 class="block-title">Снижена цена</h1>
+<h1 class="block-title">Товары со скидкой</h1>
 <div class="block-items">
     <?php foreach($itemsSales as $item): ?>
         <div>

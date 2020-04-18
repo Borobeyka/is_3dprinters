@@ -1,7 +1,7 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto Condensed';
+  font-family: 'Roboto Condensed', sans-serif;
   font-size: 14pt;
   color: #1C1C1C;
 }
@@ -792,6 +792,7 @@ footer .lower-row {
     flex-direction: column;
   }
   footer .upper-row > div {
+    border: 0;
     margin-bottom: 25px;
   }
   footer .upper-row > div:last-child {
