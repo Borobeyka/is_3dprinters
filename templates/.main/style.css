@@ -798,4 +798,12 @@ footer .lower-row {
   footer .upper-row > div:last-child {
     margin-bottom: 0;
   }
+  .admin-strip {
+    flex-direction: column;
+  }
+  .admin-strip a {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
 }
