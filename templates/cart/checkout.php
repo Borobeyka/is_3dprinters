@@ -14,8 +14,8 @@
         else if(empty($data["phone"])) $customerError = "Необходимо ввести телефон получателя";
         if(strlen($customerError) == 0) {
             global $dbLink;
-            $query = "INSERT INTO orders VALUES(NULL, %d, %d, %d, NOW(), DEFAULT)";
-            $query = sprintf($query, getUserID(), $userCart["summ"], $userCart["stock"]);
+            $query = "INSERT INTO orders VALUES(NULL, %d, %d, %d, '%s', DEFAULT)";
+            $query = sprintf($query, getUserID(), $userCart["summ"], $userCart["stock"], date("Y-m-d H:i:s"));
             mysqli_query($dbLink, $query);
 
             $query = "SELECT LAST_INSERT_ID()";

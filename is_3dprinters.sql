@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Мар 29 2020 г., 13:23
+-- Время создания: Апр 18 2020 г., 13:04
 -- Версия сервера: 5.7.23-24
 -- Версия PHP: 5.3.28
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `cart_details` (
   `cart_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `count` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 --
 -- Триггеры `cart_details`
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `item_price` (
 --
 
 INSERT INTO `item_price` (`id`, `item_id`, `price`, `old_price`, `date_change`) VALUES
-(1, 1, 499, 799, '2020-03-01'),
+(1, 1, 499, 799, '2020-04-16'),
 (2, 2, 70, 0, '1970-01-01'),
 (3, 3, 100, 120, '2020-03-21'),
 (4, 4, 10, 0, '1970-01-01'),
@@ -302,15 +302,16 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `count` int(11) NOT NULL DEFAULT '1',
   `date` datetime NOT NULL,
   `status` varchar(64) NOT NULL DEFAULT 'В обработке'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `summ`, `count`, `date`, `status`) VALUES
-(1, 1, 729, 3, '2020-03-22 18:07:42', 'В обработке'),
-(2, 1, 3910, 4, '2020-03-26 17:03:27', 'В обработке');
+(3, 1, 4250, 3, '2020-04-01 12:15:15', 'В обработке'),
+(4, 1, 1080, 2, '2020-04-13 18:53:25', 'В обработке'),
+(5, 1, 125, 1, '2020-04-18 10:36:36', 'В обработке');
 
 -- --------------------------------------------------------
 
@@ -325,20 +326,19 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `count` int(11) NOT NULL DEFAULT '1',
   `title` varchar(64) NOT NULL,
   `price` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `order_details`
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `count`, `title`, `price`) VALUES
-(1, 1, 1, 1, 'Экструдер direct', 499),
-(2, 1, 2, 3, 'Подшипник LM8UU', 70),
-(3, 1, 4, 2, 'Пружина натяжения ремня 6мм', 10),
-(4, 2, 27, 1, 'Алюминиевый нагревательный стол MK3 328x328x3 мм 24V', 2000),
-(5, 2, 30, 1, 'Экструдер Diamond', 2000),
-(6, 2, 21, 1, 'Нагреватель высокотемпературный 24V 50W', 270),
-(7, 2, 14, 1, 'Зубчатое колесо с выемкой 3 мм, внутренний 8 мм', 130);
+(8, 3, 27, 1, 'Алюминиевый нагревательный стол MK3 328x328x3 мм 24V', 2000),
+(9, 3, 30, 1, 'Экструдер Diamond', 2000),
+(10, 3, 13, 2, 'Зубчатое колесо с выемкой 1.75 мм, внутренний 8 мм', 125),
+(11, 4, 24, 1, 'Шаговый двигатель nema 17 17HS40005', 760),
+(12, 4, 25, 2, 'Шнур питания европейского стандарта 220V 1 м', 160),
+(14, 5, 13, 1, 'Зубчатое колесо с выемкой 1.75 мм, внутренний 8 мм', 125);
 
 -- --------------------------------------------------------
 
@@ -363,8 +363,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `hash`, `ip`, `phone`, `name`, `surname`, `isAdmin`) VALUES
-(1, 'dandr07@yandex.ru', '756bc47cb5215dc3329ca7e1f7be33a2dad68990bb94b76d90aa07f4e44a233a', 'aa18e69e1093a069f13deb2a10fadd2a5e9f032e0c45ce66ff780dca0f25b3ff', '46.242.8.137', '8(916)913-43-88', 'Данила', 'Малинкин', 1),
-(2, 'tester@yandex.ru', 'dd041ff70fb948ec307d6694130596588b26e821c5591d2144578d326e8fa1eb', 'b485644241f683de47edc7ad4d9c2ac531281fe10e04f91392378def9c684ec0', '::1', '8(999)888-77-66', 'Tester', 'Testerovich', 0),
+(1, 'dandr07@yandex.ru', '756bc47cb5215dc3329ca7e1f7be33a2dad68990bb94b76d90aa07f4e44a233a', '30e92d3d1ec9975fb0dff2ad43bd81f9c9f084972f7e717822cb3f3946bd4628', '46.242.9.95', '8(916)913-43-88', 'Данила', 'Малинкин', 1),
+(2, 'tester@yandex.ru', 'dd041ff70fb948ec307d6694130596588b26e821c5591d2144578d326e8fa1eb', '4ab12d20ab17dec8dd8711d6be0cef586f06a70053dcfd27234425fad4b0e473', '46.242.8.137', '8(999)888-77-66', 'Tester', 'Testerovich', 0),
 (3, 'danila2202@gmail.com', '173af653133d964edfc16cafe0aba33c8f500a07f3ba3f81943916910c257705', '1feb050a59635afcf161c832aaecfcacb4c925032d2750d69d6a054281d45359', '::1', '8(888)888-88-88', 'Test', 'Test', 0);
 
 --
@@ -440,7 +440,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT для таблицы `cart_details`
 --
 ALTER TABLE `cart_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
@@ -460,12 +460,12 @@ ALTER TABLE `item_price`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
