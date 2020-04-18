@@ -1,6 +1,6 @@
 <?php
     $order = getOrderByID((int)$param);
-    if(getUserID() != $order["user_id"]) redirect("/");
+    if(!isUserAdmin() && getUserID() != $order["user_id"]) redirect("/");
     $orderDetails = getOrderDetailsByID($order["id"]);
     if($orderDetails == false) redirect("/");
     $title = "Детали заказа #".$order["id"];
@@ -48,6 +48,7 @@
     </table>
     <h2 class="block-subtitle">Итоговая сумма заказа: <?=$order["summ"]?> руб.</h2>
     <h2 class="block-subtitle">Статус заказа: <?=mb_strtolower($order["status"])?></h2>
+    <h2 class="block-subtitle">Заказчик: <?=$order["surname"]?> <?=$order["name"]?></h2>
 <?php else: ?>
     <?php redirect("/"); ?>
 <?php endif; ?>

@@ -114,5 +114,17 @@
             "action" => "edit",
             "title" => ""
         ],
+        [
+            "path" => "/^admin\/orders(\/)?$/",
+            "template" => "admin/orders",
+            "action" => "index",
+            "title" => "Заказы"
+        ],
+        [
+            "path" => "/^admin\/orders\/status\/[0-9]{1,32}(\/)?$/",
+            "template" => "admin/orders",
+            "action" => "status",
+            "title" => ""
+        ],
     ];
 ?>

@@ -14,3 +14,16 @@
         </div>
     </div>
 </div>
+<h1 class="block-subtitle">Действия с заказами</h1>
+<div class="admin-buttons">
+    <div class="column">
+        <div>
+            <a href="/admin/orders">Перейти к заказам</a>
+        </div>
+    </div>
+    <div class="column">
+        <div>
+            <a href="/admin/orders/statistic">Статистика</a>
+        </div>
+    </div>
+</div>

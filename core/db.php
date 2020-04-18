@@ -18,6 +18,19 @@
         else return false;  
     }
 
+    function getAllOrdersShort() {
+        global $dbLink;
+        $orders = [];
+        $query = "SELECT o.*, u.name, u.surname FROM orders as o, users as u WHERE o.user_id = u.id ORDER BY o.date DESC";
+        $result = mysqli_query($dbLink, $query);
+        if(mysqli_num_rows($result)) {
+            while($row = mysqli_fetch_assoc($result))
+                array_push($orders, $row);
+            return $orders;
+        }
+        else return false; 
+    }
+
     function getItemsBySales() {
         global $dbLink;
         $items = [];
@@ -274,7 +287,7 @@
     function getOrderByID($orderID) {
         if(isUserLogged()) {
             global $dbLink;
-            $query = "SELECT * FROM orders WHERE id = '%d'";
+            $query = "SELECT o.*, u.name, u.surname FROM orders as o, users as u WHERE o.id = %d AND o.user_id = u.id";
             $query = sprintf($query, $orderID);
             $result = mysqli_query($dbLink, $query);
             if(mysqli_num_rows($result))
@@ -309,7 +322,7 @@
     }
     
     function convertDate($date) {
-        return date("d.m.Y h:i", strtotime($date));
+        return date("d.m.Y H:i", strtotime($date));
     }
 
 ?>

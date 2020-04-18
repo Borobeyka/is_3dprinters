@@ -6,5 +6,6 @@
         <a href="/admin">Панель администратора</a>
         <a href="/admin/item/add">Добавить товар</a>
         <a href="/admin/item/edit">Изменить товар</a>
+        <a href="/admin/orders">Заказы</a>
     </div>
 <?php endif; ?>
