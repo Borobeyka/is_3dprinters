@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/uploads/system/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
         <title><?=$title?></title>
         <script type="text/javascript" src="/core/libs/jquery-3.4.1.min.js"></script>
