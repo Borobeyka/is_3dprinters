@@ -1,4 +1,5 @@
 <?php
+    if(isUserLogged()) redirect("/profile");
     $data = $_POST;
     $registerError = "";
     if(!empty($data["submit"])) {

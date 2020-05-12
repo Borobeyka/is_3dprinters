@@ -3,6 +3,20 @@
     if(!$dbLink) exit();
     mysqli_query($dbLink, "SET NAMES UTF8");
 
+    function getItemsPurchased() {
+        global $dbLink;
+        $items = [];
+        $query = "SELECT MAX(od.item_id) as item_id, SUM(od.count) as count, it.*, ip.* FROM order_details as od, items as it,
+            item_price as ip WHERE it.id = od.item_id AND it.id = ip.item_id GROUP BY od.item_id  ORDER BY count DESC LIMIT 4";
+        $result = mysqli_query($dbLink, $query);
+        if(mysqli_num_rows($result)) {
+            while($row = mysqli_fetch_assoc($result))
+                array_push($items, $row);
+            return $items;
+        }
+        else return false; 
+    }
+
     function getItemsBySearch($input) {
         global $dbLink;
         $items = [];
