@@ -21,9 +21,4 @@
             <a href="/admin/orders">Перейти к заказам</a>
         </div>
     </div>
-    <div class="column">
-        <div>
-            <a href="/admin/orders/statistic">Статистика</a>
-        </div>
-    </div>
 </div>
