@@ -167,15 +167,8 @@
         setcookie("hash", $hash, time() + AUTH_SESSION_TIME, "/");
     }
 
-    function getUserIP(){
-        $value = "";
-        if (!empty($_SERVER["HTTP_CLIENT_IP"]))
-            $value = $_SERVER["HTTP_CLIENT_IP"];
-        else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
-            $value = $_SERVER["HTTP_X_FORWARDED_FOR"];
-        elseif (!empty($_SERVER["REMOTE_ADDR"]))
-            $value = $_SERVER["REMOTE_ADDR"];
-        return $value;
+    function getUserIP() {
+        return $_SERVER["REMOTE_ADDR"];
     }
 
     function getUserHash() {
