@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.10
--- https://www.phpmyadmin.net
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 18 2020 г., 13:04
+-- Время создания: Июн 16 2020 г., 12:30
 -- Версия сервера: 5.7.23-24
--- Версия PHP: 5.3.28
+-- Версия PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,12 +27,12 @@ SET time_zone = "+00:00";
 -- Структура таблицы `carts`
 --
 
-CREATE TABLE IF NOT EXISTS `carts` (
+CREATE TABLE `carts` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `summ` int(11) NOT NULL DEFAULT '0',
   `count` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `carts`
@@ -39,7 +40,11 @@ CREATE TABLE IF NOT EXISTS `carts` (
 
 INSERT INTO `carts` (`id`, `user_id`, `summ`, `count`) VALUES
 (1, 2, 0, 0),
-(2, 1, 0, 0);
+(2, 1, 499, 1),
+(3, 4, 0, 0),
+(4, 5, 0, 0),
+(6, 7, 0, 0),
+(7, 20, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -47,19 +52,25 @@ INSERT INTO `carts` (`id`, `user_id`, `summ`, `count`) VALUES
 -- Структура таблицы `cart_details`
 --
 
-CREATE TABLE IF NOT EXISTS `cart_details` (
+CREATE TABLE `cart_details` (
   `id` int(11) NOT NULL,
   `cart_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `count` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `cart_details`
+--
+
+INSERT INTO `cart_details` (`id`, `cart_id`, `item_id`, `count`) VALUES
+(86, 2, 1, 1);
 
 --
 -- Триггеры `cart_details`
 --
 DELIMITER $$
-CREATE TRIGGER `add_cart_count` AFTER INSERT ON `cart_details`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `add_cart_count` AFTER INSERT ON `cart_details` FOR EACH ROW UPDATE
 	carts as c
 SET
 	c.count = c.count + 1
@@ -68,8 +79,7 @@ WHERE
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `add_cart_summ` AFTER INSERT ON `cart_details`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `add_cart_summ` AFTER INSERT ON `cart_details` FOR EACH ROW UPDATE
 	carts
 SET
 	summ = summ + (
@@ -85,8 +95,7 @@ WHERE
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `sub_cart_count` BEFORE DELETE ON `cart_details`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `sub_cart_count` BEFORE DELETE ON `cart_details` FOR EACH ROW UPDATE
 	carts as c
 SET
 	c.count = c.count - OLD.count
@@ -95,8 +104,7 @@ WHERE
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `sub_cart_summ` BEFORE DELETE ON `cart_details`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `sub_cart_summ` BEFORE DELETE ON `cart_details` FOR EACH ROW UPDATE
 	carts
 SET
 	summ = summ - (
@@ -118,12 +126,12 @@ DELIMITER ;
 -- Структура таблицы `categories`
 --
 
-CREATE TABLE IF NOT EXISTS `categories` (
+CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `title` varchar(32) NOT NULL,
   `image` varchar(32) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `categories`
@@ -140,13 +148,13 @@ INSERT INTO `categories` (`id`, `name`, `title`, `image`) VALUES
 -- Структура таблицы `items`
 --
 
-CREATE TABLE IF NOT EXISTS `items` (
+CREATE TABLE `items` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` varchar(2048) NOT NULL DEFAULT 'Описание отсутствует',
   `image` varchar(128) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `items`
@@ -185,13 +193,13 @@ INSERT INTO `items` (`id`, `category_id`, `title`, `description`, `image`) VALUE
 -- Структура таблицы `item_price`
 --
 
-CREATE TABLE IF NOT EXISTS `item_price` (
+CREATE TABLE `item_price` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `old_price` int(11) NOT NULL DEFAULT '0',
   `date_change` date NOT NULL DEFAULT '1970-01-01'
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `item_price`
@@ -209,7 +217,7 @@ INSERT INTO `item_price` (`id`, `item_id`, `price`, `old_price`, `date_change`) 
 (9, 10, 250, 0, '1970-01-01'),
 (10, 11, 260, 290, '2020-03-26'),
 (11, 12, 120, 150, '2020-03-26'),
-(12, 13, 125, 0, '1970-01-01'),
+(12, 13, 300, 0, '2020-05-15'),
 (13, 14, 130, 0, '1970-01-01'),
 (17, 20, 220, 0, '1970-01-01'),
 (18, 21, 270, 0, '1970-01-01'),
@@ -228,16 +236,14 @@ INSERT INTO `item_price` (`id`, `item_id`, `price`, `old_price`, `date_change`) 
 -- Триггеры `item_price`
 --
 DELIMITER $$
-CREATE TRIGGER `delete_item_from_cart` BEFORE DELETE ON `item_price`
- FOR EACH ROW DELETE FROM
+CREATE TRIGGER `delete_item_from_cart` BEFORE DELETE ON `item_price` FOR EACH ROW DELETE FROM
 	cart_details
 WHERE
 	cart_details.item_id = OLD.item_id
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `delete_item_from_cart_summ` AFTER DELETE ON `item_price`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `delete_item_from_cart_summ` AFTER DELETE ON `item_price` FOR EACH ROW UPDATE
 	carts
 SET
 	summ = summ - (
@@ -253,8 +259,7 @@ WHERE
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_cart_summ_after` AFTER UPDATE ON `item_price`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `update_cart_summ_after` AFTER UPDATE ON `item_price` FOR EACH ROW UPDATE
 	carts as c
 INNER JOIN cart_details cd ON cd.cart_id = c.id
 SET
@@ -271,8 +276,7 @@ WHERE
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_cart_summ_before` BEFORE UPDATE ON `item_price`
- FOR EACH ROW UPDATE
+CREATE TRIGGER `update_cart_summ_before` BEFORE UPDATE ON `item_price` FOR EACH ROW UPDATE
 	carts as c
 INNER JOIN cart_details cd ON cd.cart_id = c.id
 SET
@@ -295,23 +299,29 @@ DELIMITER ;
 -- Структура таблицы `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
+CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `summ` int(11) NOT NULL,
   `count` int(11) NOT NULL DEFAULT '1',
   `date` datetime NOT NULL,
   `status` varchar(64) NOT NULL DEFAULT 'В обработке'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `summ`, `count`, `date`, `status`) VALUES
-(3, 1, 4250, 3, '2020-04-01 12:15:15', 'В обработке'),
+(3, 1, 4250, 3, '2020-04-01 12:15:15', 'Выдан'),
 (4, 1, 1080, 2, '2020-04-13 18:53:25', 'В обработке'),
-(5, 1, 125, 1, '2020-04-18 10:36:36', 'В обработке');
+(5, 1, 125, 1, '2020-04-18 10:36:36', 'Готов к выдаче'),
+(6, 1, 2550, 2, '2020-04-18 20:15:12', 'В обработке'),
+(7, 2, 245, 2, '2020-04-18 20:16:45', 'В обработке'),
+(8, 4, 120, 1, '2020-04-22 17:42:01', 'В обработке'),
+(10, 7, 160, 1, '2020-04-24 19:34:33', 'Выдан'),
+(11, 1, 1497, 1, '2020-04-30 21:39:01', 'Готов к выдаче'),
+(13, 20, 2900, 2, '2020-05-14 20:34:21', 'Готов к выдаче');
 
 -- --------------------------------------------------------
 
@@ -319,14 +329,14 @@ INSERT INTO `orders` (`id`, `user_id`, `summ`, `count`, `date`, `status`) VALUES
 -- Структура таблицы `order_details`
 --
 
-CREATE TABLE IF NOT EXISTS `order_details` (
+CREATE TABLE `order_details` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `count` int(11) NOT NULL DEFAULT '1',
   `title` varchar(64) NOT NULL,
   `price` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `order_details`
@@ -338,7 +348,16 @@ INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `count`, `title`, `pri
 (10, 3, 13, 2, 'Зубчатое колесо с выемкой 1.75 мм, внутренний 8 мм', 125),
 (11, 4, 24, 1, 'Шаговый двигатель nema 17 17HS40005', 760),
 (12, 4, 25, 2, 'Шнур питания европейского стандарта 220V 1 м', 160),
-(14, 5, 13, 1, 'Зубчатое колесо с выемкой 1.75 мм, внутренний 8 мм', 125);
+(14, 5, 13, 1, 'Зубчатое колесо с выемкой 1.75 мм, внутренний 8 мм', 125),
+(15, 6, 27, 1, 'Алюминиевый нагревательный стол MK3 328x328x3 мм 24V', 2000),
+(16, 6, 28, 1, 'Твердотельное реле MGR-1 D4860', 550),
+(17, 7, 13, 1, 'Зубчатое колесо с выемкой 1.75 мм, внутренний 8 мм', 125),
+(18, 7, 12, 1, 'Зубчатое колесо экструдера MK8 26 зубьев', 120),
+(19, 8, 23, 1, 'Керамический нагревательный элемент 24В', 120),
+(23, 10, 25, 1, 'Шнур питания европейского стандарта 220V 1 м', 160),
+(24, 11, 1, 3, 'Экструдер direct', 499),
+(26, 13, 30, 1, 'Экструдер Diamond', 2000),
+(27, 13, 29, 1, 'Экструдер E3D-V6 Bowden для 3D-принтера', 900);
 
 -- --------------------------------------------------------
 
@@ -346,26 +365,32 @@ INSERT INTO `order_details` (`id`, `order_id`, `item_id`, `count`, `title`, `pri
 -- Структура таблицы `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
   `hash` varchar(64) NOT NULL,
-  `ip` varchar(32) NOT NULL,
+  `ip` varchar(128) NOT NULL,
   `phone` varchar(16) NOT NULL,
   `name` varchar(32) NOT NULL,
   `surname` varchar(32) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `hash`, `ip`, `phone`, `name`, `surname`, `isAdmin`) VALUES
-(1, 'dandr07@yandex.ru', '756bc47cb5215dc3329ca7e1f7be33a2dad68990bb94b76d90aa07f4e44a233a', '30e92d3d1ec9975fb0dff2ad43bd81f9c9f084972f7e717822cb3f3946bd4628', '46.242.9.95', '8(916)913-43-88', 'Данила', 'Малинкин', 1),
-(2, 'tester@yandex.ru', 'dd041ff70fb948ec307d6694130596588b26e821c5591d2144578d326e8fa1eb', '4ab12d20ab17dec8dd8711d6be0cef586f06a70053dcfd27234425fad4b0e473', '46.242.8.137', '8(999)888-77-66', 'Tester', 'Testerovich', 0),
-(3, 'danila2202@gmail.com', '173af653133d964edfc16cafe0aba33c8f500a07f3ba3f81943916910c257705', '1feb050a59635afcf161c832aaecfcacb4c925032d2750d69d6a054281d45359', '::1', '8(888)888-88-88', 'Test', 'Test', 0);
+(1, 'dandr07@yandex.ru', '756bc47cb5215dc3329ca7e1f7be33a2dad68990bb94b76d90aa07f4e44a233a', '2b8ecf90b4fc2cc9c04ba8b72899c26df0e8c4d085a700f0a171371625bc9072', '46.242.9.156', '8(916)913-43-88', 'Данила', 'Малинкин', 1),
+(2, 'tester@yandex.ru', 'dd041ff70fb948ec307d6694130596588b26e821c5591d2144578d326e8fa1eb', '43910e2a5a5ee4215a23daf4f93881778f42da4a7c4c940c5a97c989d42b6e05', '46.242.9.95', '8(999)888-77-66', 'Tester', 'Testerovich', 0),
+(3, 'danila2202@gmail.com2', '173af653133d964edfc16cafe0aba33c8f500a07f3ba3f81943916910c257705', '1feb050a59635afcf161c832aaecfcacb4c925032d2750d69d6a054281d45359', '::1', '8(888)888-88-88', 'Test', 'Test', 0),
+(4, 'daslef93@gmail.com', '83c6d39f4d235ba1f7013c3bb69cf3da556ae886f2c3c7ae23fb0eef2e7645d2', '062922b59f4e59b6910f129e6780161537034e388ae772ceb4e1e57d6919947f', '94.25.170.110', '8(964)523-76-74', 'Алексей', 'Трофимов', 0),
+(5, 'privetmalina@mail.ru', '1af099c23bea870038a714577e2879f5cf448434d760074d0c1c7fef9f12a3c6', '8ae7f2c48f2006bf15b667792a10fc29c3765b5023205a99b0233b456596b428', '94.25.171.6', '8(398)423-47-82', 'Malina', 'Privet', 0),
+(7, 'BlackBass1@yandex.ru', '1f4495cefc85c149627440a665de1f68f1cd6d03ffe147099701153f6988ce0d', '56e36164617a5e2227b7e37e9a35710e13438c5c68053826b97e6f3223ba079b', '178.140.174.47', '8(925)055-12-70', 'Саша', 'Бубнов', 0),
+(17, 'katrin-m0903@yandex.ru', '173af653133d964edfc16cafe0aba33c8f500a07f3ba3f81943916910c257705', '0957daaf2f447f4c6c20a6f32517e7d7c552e2d8d2735164bd8a6c33cde22d6e', '46.242.9.95', '8(791)621-82-25', 'Екатерина', 'Малинкина', 0),
+(20, 'trunov-2015@inbox.ru', '49dc52e6bf2abe5ef6e2bb5b0f1ee2d765b922ae6cc8b95d39dc06c21c848f8c', 'beeeb6cba982e5f99490b7973d9a88be61e6d01eaf7de51a0ef0ab69ca353574', '79.139.236.27', '8(967)134-79-94', 'Лешка', 'Пузарь', 0),
+(22, 'altrunovvv@yandex.ru', '49dc52e6bf2abe5ef6e2bb5b0f1ee2d765b922ae6cc8b95d39dc06c21c848f8c', '923ab9bacd6cea483f859708b4303acfd663358085dc733010131b0dadbfa5eb', '79.139.236.27', '8(967)134-79-94', 'Lexa', 'Пузарь', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -435,42 +460,50 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT для таблицы `cart_details`
 --
 ALTER TABLE `cart_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT для таблицы `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
 --
 -- AUTO_INCREMENT для таблицы `item_price`
 --
 ALTER TABLE `item_price`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT для таблицы `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -512,6 +545,7 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

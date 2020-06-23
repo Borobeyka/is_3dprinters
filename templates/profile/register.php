@@ -22,11 +22,13 @@
                 $query = sprintf($query, $data["email"], $tempPassword, $hash, getUserIP(), $data["phone"], ucfirst($data["name"]), ucfirst($data["surname"]));
                 mysqli_query($dbLink, $query);
                 setUserHash($hash, $data["email"], $tempPassword);
+
                 $to = $data["email"];
                 $subject = "[3dp-comp.ru]: Регистрация завершена";
                 ob_start();
                 require_once("mail.php");
                 $message = ob_get_clean();
+                //$message = sprintf($message, $data["name"], $data["email"], $data["password"]);
                 $header = "From: 3dp-comp.ru <3dp-comp.ru>\r\nContent-type: text/html; charset=utf8\r\n";
                 mail($to, $subject, $message, $header);
                 redirect("/profile");
