@@ -20,8 +20,8 @@
     function getItemsBySearch($input) {
         global $dbLink;
         $items = [];
-        $query = "SELECT * FROM items as it, item_price as ip WHERE (it.title LIKE '%%%s%%' OR 
-            it.description LIKE '%%%s%%') AND it.id = ip.item_id";
+        $query = "SELECT it.*, ip.item_id, ip.price, ip.old_price, ip.date_change FROM items it LEFT JOIN item_price ip ON
+        ip.item_id = it.id WHERE it.title LIKE '%%%s%%' OR  it.description LIKE '%%%s%%';";
         $query = sprintf($query, $input, $input);
         $result = mysqli_query($dbLink, $query);
         if(mysqli_num_rows($result)) {
